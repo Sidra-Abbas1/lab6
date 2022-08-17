@@ -1,0 +1,106 @@
+package TESTNG;
+
+import java.time.Duration;
+
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.asserts.*;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+public class TestNG {
+
+	public WebDriver driver;
+	public Alert alert;
+	public WebDriverWait wait;
+	public Actions at;
+
+	@BeforeTest
+	public void OpenBrowser() {
+		System.setProperty("webdriver.chrome.driver", "C://Users//MAQS//Desktop/chromedriver.exe");
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+
+		String BaseUrl = ("https://www.globalsqa.com/angularJs-protractor/BankingProject");
+		driver.get(BaseUrl);
+	}
+
+	@Test(priority = 1)
+	public void CustomerLogin() throws InterruptedException {
+
+		WebElement custlogin = new WebDriverWait(driver, Duration.ofSeconds(5))
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Customer Login']")));
+		custlogin.click();
+
+		WebElement selectName = new WebDriverWait(driver, Duration.ofSeconds(5))
+				.until(ExpectedConditions.elementToBeClickable(By.id("userSelect")));
+		selectName.click();
+		Select selectObject = new Select(selectName);
+		// Select an <option> based upon the <select> element's internal index
+		selectObject.selectByIndex(2);
+
+		WebElement login = new WebDriverWait(driver, Duration.ofSeconds(5))
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Login']")));
+		login.click();
+		
+	}
+		@Test
+public void transactions() {
+		WebElement transactions = new WebDriverWait(driver, Duration.ofSeconds(5))
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@ng-click='transactions()']")));
+		transactions.click();
+		
+		WebElement backBtn= new WebDriverWait(driver, Duration.ofSeconds(5))
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Back']")));
+		backBtn.click();
+}
+		@Test
+		public void deposit() {
+		WebElement deposit = new WebDriverWait(driver, Duration.ofSeconds(5))
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@ng-click='deposit()']")));
+		deposit.click();
+		
+		//WebElement amount = driver.findElement(By.xpath("//button[@ng-click='withdrawl()']"));
+		//amount.sendKeys("7000");
+		
+		WebElement amount = new WebDriverWait(driver, Duration.ofSeconds(5))
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@ng-model='amount']")));
+		amount.sendKeys("8000");
+		
+		WebElement depositBtn = new WebDriverWait(driver, Duration.ofSeconds(5))
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Deposit']")));
+		depositBtn.click();
+		}
+		@Test
+		public void withdrawl() {
+		WebElement withdrawl = new WebDriverWait(driver, Duration.ofSeconds(5))
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@ng-click='withdrawl()']")));
+		withdrawl.click();
+		
+		/*WebElement withdrawAmnt = new WebDriverWait(driver, Duration.ofSeconds(10))
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//label//following::input")));
+		withdrawAmnt.sendKeys("4000");*/
+		
+		WebElement Wiam= driver.findElement(By.xpath("//label//following::input"));
+		Wiam.sendKeys("3000");
+		
+		/*WebElement withdrawlBtn = new WebDriverWait(driver, Duration.ofSeconds(5))
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Withdraw']")));
+		withdrawlBtn.click();
+		*/
+	}
+
+	@AfterTest
+	public void OpenBrowser3() {
+		// driver.close();
+	}
+
+}
